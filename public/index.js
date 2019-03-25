@@ -1,20 +1,89 @@
-class QueryParameter {
-  static get params() {
-    return new URLSearchParams(window.location.search);
+class QueryParameterHandler {
+  constructor(url) {
+    this.params = new URLSearchParams(url);
   }
 
-  static get(name) {
+  get(name) {
     return this.params.get(name);
   }
 
-  static set(name, value) {
+  set(name, value) {
     return this.params.set(name, value);
   }
 
-  static has(name){
+  has(name){
     return this.params.has(name);
   }
 }
+
+class UserRole {
+  constructor() {
+    this.queryParameterHandler = new QueryParameterHandler(window.location.search);
+    this.queryParameter = 'peer-uuid';
+  }
+
+  get name() {
+    if (this.isClient) {
+      return 'client';
+    }
+    else {
+      return 'server';
+    }
+  }
+
+  get isServer() {
+    return !this.queryParameterHandler.has(this.queryParameter);
+  }
+
+  get isClient() {
+    return this.queryParameterHandler.has(this.queryParameter);
+  }
+
+  get server() {
+    return this.queryParameterHandler.get(this.queryParameter);
+  }
+}
+
+
+class User {
+  constructor(){
+    this.uuid = this.generateuUUIDv4();
+    this.role = new UserRole();
+    this.peers = [];
+  }
+
+  connect(uri) {
+    return new Promise((resolve, reject) => {
+      this.socket = io.connect(uri);
+      this.socket.on('connect', resolve);
+      this.socket.on('error', reject);
+    });
+  }
+
+  getRoom() {
+    if (this.role.isClient) {
+      room = this.role.server;
+    }
+    else {
+      return this.uuid;
+    }
+  }
+
+  roomJoin(room) {
+    if (this.socket) {
+      this.socket.emit('room.join', room);
+    }
+  }
+
+
+  generateuUUIDv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+}
+
 
 /*
 Examples of RTCQuicTransport API usage:
@@ -22,7 +91,7 @@ Examples of RTCQuicTransport API usage:
  - Writing see: QuicFileSender.writeFileToStream().
  - Reading see: QuicFileReceiver.readFileFromStream().
 */
-function setup() {
+async function setup() {
   const client =
       new Transport(document.querySelector('.left-pane'));
   const server =
@@ -38,22 +107,18 @@ function setup() {
     }
   };
 
-  var socket = io.connect('http://localhost:3000');
-  socket.on('connect', function(data) {
-    const session = {
-      id: socket.io.engine.id,
-      isClient: QueryParameter.has("id"),
-      isServer: !QueryParameter.has("id")
-    }
-    console.table(session);
-
-    if (session.isServer){
-      QueryParameter.set("id", session.id);
-    }
-    else {
-      socket.emit('join', 'Hello World from client');
-    }
-  });
+  
+  try {
+    const user = new User();
+    await user.connect('http://localhost:3000');
+    console.log('User connected.')
+    user.socket.on('on.room.join', data => console.log(data));
+    const room = user.getRoom();
+    user.roomJoin(room);
+  }
+  catch(error){
+    console.error(error);
+  }
 }
 
 function connectTransports(client, server) {

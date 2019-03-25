@@ -20,8 +20,18 @@ function serverStarted () {
 }
 
 io.on('connection', function(client){
-  console.log(`client ${client.id} connected` );
+  console.log(`Client ${client.id} connected.` );
+  
   client.on('join', function(data){
     console.log('join data', data);
+  });
+
+  client.on('room.join', function(room) {
+    console.log(`Client ${client.id} joined room ${room}.`);
+    client.join(room);
+  });
+
+  client.on("disconnect", function(data) {
+    console.log("disconnected", data)
   });
 });
