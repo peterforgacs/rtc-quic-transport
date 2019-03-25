@@ -62,7 +62,7 @@ class User {
 
   getRoom() {
     if (this.role.isClient) {
-      room = this.role.server;
+      return this.role.server;
     }
     else {
       return this.uuid;
@@ -84,6 +84,12 @@ class User {
   }
 }
 
+class TransportSignaler {
+  constructor(transport) {
+    this.transport = transport;
+
+  }
+}
 
 /*
 Examples of RTCQuicTransport API usage:
@@ -92,12 +98,24 @@ Examples of RTCQuicTransport API usage:
  - Reading see: QuicFileReceiver.readFileFromStream().
 */
 async function setup() {
-  const client =
-      new Transport(document.querySelector('.left-pane'));
-  const server =
-      new Transport(document.querySelector('.right-pane'));
+  try {
+    const user = new User();
+    await user.connect('http://localhost:3000');
+    console.log('User connected.', user.uuid)
+    user.socket.on('on.room.join', data => console.log(data));
+    const room = user.getRoom();
+    user.roomJoin(room);
+    const client = new Transport(document.querySelector('.left-pane'));
+    const server = new Transport(document.querySelector('.right-pane'));
+    connectTransports(client, server);
+  }
+  catch(error){
+    console.error(error);
+  }
 
-  connectTransports(client, server);
+  
+
+  
 
   const fileInput = document.getElementById('file-input');
   fileInput.onchange = () => {
@@ -108,17 +126,7 @@ async function setup() {
   };
 
   
-  try {
-    const user = new User();
-    await user.connect('http://localhost:3000');
-    console.log('User connected.')
-    user.socket.on('on.room.join', data => console.log(data));
-    const room = user.getRoom();
-    user.roomJoin(room);
-  }
-  catch(error){
-    console.error(error);
-  }
+  
 }
 
 function connectTransports(client, server) {
