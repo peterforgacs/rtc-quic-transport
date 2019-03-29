@@ -44,12 +44,12 @@ class UserRole {
   }
 }
 
-
 class User {
   constructor(){
-    this.uuid = this.generateuUUIDv4();
-    this.role = new UserRole();
-    this.peers = [];
+    this.uuid      = User.generateuUUIDv4();
+    this.role      = new UserRole();
+    this.room      = null;
+    this.transport = null;
   }
 
   connect(uri) {
@@ -60,7 +60,32 @@ class User {
     });
   }
 
-  getRoom() {
+  setRoom() {
+    this.room = new Room(this);
+  }
+
+  setTransport(){
+    this.transport = new Transport(document.querySelector('.left-pane'), this.socket);
+  }
+
+  static generateuUUIDv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+}
+
+class Room {
+  constructor({ role, uuid, socket }){
+    this.role = role;
+    this.uuid = uuid;
+    this.socket = socket;
+    this.joined = false;
+    this.peers = [];
+  }
+
+  get defaultRoomId() {
     if (this.role.isClient) {
       return this.role.server;
     }
@@ -69,26 +94,38 @@ class User {
     }
   }
 
-  roomJoin(room) {
-    if (this.socket) {
-      this.socket.emit('room.join', room);
-    }
+  join() {
+    this.socket.emit('room.join', this.defaultRoomId, this.role.isClient);
+    this.socket.once('on.room.join', this.onJoin.bind(this));
   }
 
+  leave() {
+    this.socket.emit('room.join', this.defaultRoomId);
+    this.socket.once('on.room.leave', this.onLeave.bind(this));
+  }
 
-  generateuUUIDv4() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-      return v.toString(16);
-    });
+  onJoin(data) {
+    console.log(data);
+    this.joined = bool;
+  }
+
+  onLeave(data) {
+    console.log(data);
+    this.joined = false;
+  }
+
+  getPeers(){
+    this.socket.emit('room.get.peers', this.defaultRoomId);
+    this.socket.once('room.set.peers', this.setPeers.bind(this));
+  }
+
+  setPeers(peers){
+    console.log('Setting peers', peers);
   }
 }
 
-class TransportSignaler {
-  constructor(transport) {
-    this.transport = transport;
+class Peer {
 
-  }
 }
 
 /*
@@ -102,9 +139,13 @@ async function setup() {
     const user = new User();
     await user.connect('http://localhost:3000');
     console.log('User connected.', user.uuid)
-    user.socket.on('on.room.join', data => console.log(data));
-    const room = user.getRoom();
-    user.roomJoin(room);
+    user.setRoom();
+    user.room.join();
+    user.room.getPeers();
+    user.setTransport();
+    //user.transport.signaler.listenToIceCandidates();
+    //user.transport.signaler.gatherIceCandidates();
+
     const client = new Transport(document.querySelector('.left-pane'));
     const server = new Transport(document.querySelector('.right-pane'));
     connectTransports(client, server);
@@ -113,10 +154,6 @@ async function setup() {
     console.error(error);
   }
 
-  
-
-  
-
   const fileInput = document.getElementById('file-input');
   fileInput.onchange = () => {
     const {files} = fileInput;
@@ -124,9 +161,6 @@ async function setup() {
       sendFile(files[i], client);
     }
   };
-
-  
-  
 }
 
 function connectTransports(client, server) {
@@ -152,10 +186,12 @@ function connectTransports(client, server) {
 // Includes the RTCIceTransport, RTCQuicTransport and related html
 // elements.
 class Transport {
-  constructor(element) {
+  constructor(element, socket) {
     this.ice = new RTCIceTransport();
     this.quic = new RTCQuicTransport(this.ice);
     this.element = element;
+    this.socket = socket;
+    this.signaler = new Signaler(this);
     // Received a stream. This means data has been written to a RTCQuicStream
     // stream that is part of the remote (connected) Transport.
     this.quic.onquicstream = ({stream}) => {
@@ -246,7 +282,42 @@ class Transport {
     // Update stats every 100 ms.
     updateStats();
   }
+}
 
+class Signaler {
+  constructor({ socket, ice, quic }) {
+    this.socket = socket;
+    this.ice    = ice;
+    this.quic   = quic;
+    this.localIceParameter = null;
+    this.quicKey = null;
+  }
+
+  gatherIceCandidates() {
+    this.ice.gather({});
+  }
+
+  setIceLocalParameters() {
+    this.localIceParameter = this.ice.getLocalParameters()
+  }
+
+  listenToIceCandidates() {
+    this.ice.onicecandidate = ({candidate}) => {
+      if (candidate) {
+        this.broadcastIceCandidate(candidate);
+      }
+    };
+  }
+
+  broadcastIceCandidate(){
+    this.ice.addRemoteCandidate(candidate);
+  }
+
+  addRemoteIceCandidate(candidate) {
+    if (candidate){
+      this.ice.addRemoteCandidate(canidate);
+    }
+  }
 }
 
 class FileTransferElement {
