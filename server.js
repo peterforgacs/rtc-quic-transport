@@ -81,6 +81,11 @@ io.on('connection', function(client){
     console.log('join data', data);
   });
 
+  client.on('private', ({ target, message}) => {
+    console.log('sending private message', target, message)
+    client.broadcast.to(target).emit('private', message);
+  });
+
   client.on('room.join', Room.join.bind(client) );
   client.on('room.leave', Room.leave.bind(client) );
   client.on('room.get.members', Room.members.bind(client));

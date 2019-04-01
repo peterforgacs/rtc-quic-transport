@@ -57,15 +57,12 @@ class User {
       this.socket = io.connect(uri);
       this.socket.on('connect', resolve);
       this.socket.on('error', reject);
+      this.socket.on('private', this.onPrivateMessage.bind(this));
     });
   }
 
-  setRoom() {
-    this.room = new Room(this);
-  }
-
-  setTransport(){
-    this.transport = new Transport(document.querySelector('.left-pane'), this.socket);
+  onPrivateMessage(message) {
+    console.log('Private message received', message)
   }
 
   static generateuUUIDv4() {
@@ -94,23 +91,25 @@ class Room {
     }
   }
 
-  join() {
+  join(onJoinCallback) {
     this.socket.emit('room.join', this.defaultRoomId, this.role.isClient);
-    this.socket.on('room.join.event', this.onJoin.bind(this));
+    this.socket.on('room.join.event', member => {
+      if (member.id === this.socket.id) {
+        console.log('Joined room.');
+        this.joined = true;
+      }
+      else {
+        let memberObject = this.addMember(member);
+        if (onJoinCallback) {
+          onJoinCallback(memberObject);
+        }
+      }
+    });
   }
 
   leave() {
     this.socket.emit('room.join', this.defaultRoomId);
     this.socket.on('room.leave.event', this.onLeave.bind(this));
-  }
-
-  onJoin(member) {
-    if (member.id === this.socket.id) {
-      console.log('Joined room.');
-    }
-    else {
-      this.setMember(member)
-    }
   }
 
   onLeave(member) {
@@ -120,21 +119,36 @@ class Room {
 
   getMembers(){
     this.socket.emit('room.get.members', this.defaultRoomId);
-    this.socket.once('room.set.members', this.setMembers.bind(this));
+    this.socket.once('room.set.members', this.addMembers.bind(this));
   }
 
-  setMembers(members){
+  addMembers(members){
     if (members) {
-      members.map( member => new RoomMember(member))
-      .forEach(this.setMember.bind(this));
+      members.map(this.addMember.bind(this))
     }
   }
 
-  setMember(member) {
+  addMember(member) {
+    if (!(member instanceof RoomMember)) {
+      member = new RoomMember(member, this.socket);
+    }
     if (member && member.id !== this.id) {
       this.members.push(member);
-      console.log('Room member list updated', this.members);
+      this.onMemberChange();
     }
+
+    return member;
+  }
+
+  removeMember(member) {
+    if (member && member.id) {
+      this.members = this.members.filter(_member => member.id !== _member.id);
+      this.onMemberChange();
+    }
+  }
+
+  onMemberChange() {
+    console.table(this.members)
   }
 
   getMemberById(id) {
@@ -149,9 +163,16 @@ class Room {
 }
 
 class RoomMember {
-  constructor({ id, role }) {
+  constructor({ id, role }, socket) {
     this.id = id;
     this.role = role;
+    this.socket = socket;
+  }
+
+  privateMessage(message) {
+    if (message) {
+      this.socket.emit('private', { target: this.id, message})
+    }
   }
 }
 
@@ -165,11 +186,20 @@ async function setup() {
   try {
     const user = new User();
     await user.connect('http://localhost:3000');
-    console.log('User connected.', user.uuid)
-    user.setRoom();
-    user.room.join();
+    user.room = new Room(user);
+    user.room.join(member => {
+      if (user.isServer) {
+        console.log("Callback triggered");
+        member.privateMessage('ping');
+      }
+      
+    });
     user.room.getMembers();
-    user.setTransport();
+    
+    
+    
+    
+
     //user.transport.signaler.listenToIceCandidates();
     //user.transport.signaler.gatherIceCandidates();
 
