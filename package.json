@@ -4,7 +4,7 @@
   "description": "Demo application to send files RTCQuicTransport",
   "dependencies": {
     "express": "^4.15.2",
-    "socket.io": "^1.7.3"
+    "socket.io": "^2.2.0"
   },
   "scripts": {
     "start": "nodemon server.js"
