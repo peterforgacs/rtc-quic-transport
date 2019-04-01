@@ -82,7 +82,7 @@ class Room {
     this.uuid = uuid;
     this.socket = socket;
     this.joined = false;
-    this.peers = [];
+    this.members = [];
   }
 
   get defaultRoomId() {
@@ -96,36 +96,63 @@ class Room {
 
   join() {
     this.socket.emit('room.join', this.defaultRoomId, this.role.isClient);
-    this.socket.once('on.room.join', this.onJoin.bind(this));
+    this.socket.on('room.join.event', this.onJoin.bind(this));
   }
 
   leave() {
     this.socket.emit('room.join', this.defaultRoomId);
-    this.socket.once('on.room.leave', this.onLeave.bind(this));
+    this.socket.on('room.leave.event', this.onLeave.bind(this));
   }
 
-  onJoin(data) {
-    console.log(data);
-    this.joined = bool;
+  onJoin(member) {
+    if (member.id === this.socket.id) {
+      console.log('Joined room.');
+    }
+    else {
+      this.setMember(member)
+    }
   }
 
-  onLeave(data) {
-    console.log(data);
+  onLeave(member) {
+    console.log(member);
     this.joined = false;
   }
 
-  getPeers(){
-    this.socket.emit('room.get.peers', this.defaultRoomId);
-    this.socket.once('room.set.peers', this.setPeers.bind(this));
+  getMembers(){
+    this.socket.emit('room.get.members', this.defaultRoomId);
+    this.socket.once('room.set.members', this.setMembers.bind(this));
   }
 
-  setPeers(peers){
-    console.log('Setting peers', peers);
+  setMembers(members){
+    if (members) {
+      members.map( member => new RoomMember(member))
+      .forEach(this.setMember.bind(this));
+    }
+  }
+
+  setMember(member) {
+    if (member && member.id !== this.id) {
+      this.members.push(member);
+      console.log('Room member list updated', this.members);
+    }
+  }
+
+  getMemberById(id) {
+    if (id) {
+      return this.members.filter(member => member.id === id);
+    }
+  }
+
+  getServerMember() {
+    return this.members.filter(member => member.role === 'server');
   }
 }
 
-class Peer {
-
+class RoomMember {
+  constructor({ id, role }) {
+    this.id = id;
+    this.role = role;
+  }
 }
 
 /*
@@ -141,7 +168,7 @@ async function setup() {
     console.log('User connected.', user.uuid)
     user.setRoom();
     user.room.join();
-    user.room.getPeers();
+    user.room.getMembers();
     user.setTransport();
     //user.transport.signaler.listenToIceCandidates();
     //user.transport.signaler.gatherIceCandidates();

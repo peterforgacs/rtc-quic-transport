@@ -19,6 +19,61 @@ function serverStarted () {
     console.log('Press Ctrl+C to exit...\n');
 }
 
+class Room {
+  static join(room, isClient) {
+    console.log(`Client ${this.id} joined room ${room} as ${isClient ? 'client' : 'server'}.`);
+    this.role = isClient ? 'client' : 'server';
+    this.join(room);
+    io.in(room).emit('room.join.event', { id: this.id, role: this.role });
+  }
+
+  static leave(room) {
+    console.log(`Client ${this.id} leaving room ${room}.`);
+    this.leave(room);
+    io.in(room).emit('room.leave.event', { id: this.id, role: this.role });
+  }
+
+  static async members(room) {
+    const findMemberObject = memberId => {
+      return io.sockets.connected[memberId]
+    };
+
+    const findMembersOfRoom = (room) => {
+      return new Promise((resolve) => {
+        io.of('/').in(room).clients(( error, memberIds ) => {
+          if (error){
+            console.error(error);
+            return resolve([]);
+          }
+          else {
+            const members = memberIds.map(findMemberObject);
+            return resolve(members);
+          }
+        });
+      });
+    };
+
+    const membersAll = await findMembersOfRoom(room);
+    const membersWithoutSelf = membersAll.filter(member => member.id !== this.id );
+    let publicMembers = [];
+
+    if (this.role === 'server'){
+      publicMembers = membersWithoutSelf;
+    }
+    else if (this.role === 'client') {
+      publicMembers = membersWithoutSelf.filter(member => member.role === 'server');
+    }
+    else {
+      publicMembers = [];
+    }
+
+
+    publicMembers = publicMembers.map(member => ({ id: member.id, role: member.role }));
+    console.log(`Client ${this.id} requesting members of room ${room}.\nPeers: ${publicMembers.length > 0 ? publicMembers : 'none'}`);
+    this.emit('room.set.members', publicMembers);
+  }
+}
+
 io.on('connection', function(client){
   console.log(`Client ${client.id} connected.` );
 
@@ -26,39 +81,9 @@ io.on('connection', function(client){
     console.log('join data', data);
   });
 
-  client.on('room.join', function(room, isClient) {
-    console.log(`Client ${client.id} joined room ${room} as ${isClient ? 'client' : 'server'}.`);
-    client.role = isClient ? 'client' : 'server';
-    client.join(room);
-  });
-
-  client.on('room.leave', function(room) {
-    console.log(`Client ${client.id} leaving room ${room}.`);
-    client.leave(room);
-  });
-
-  client.on('room.get.peers', function(room) {
-    if (client.role === 'server'){
-      io.of('/').in(room).clients(( error, clients ) => {
-        let peers = [];
-        if (error){
-          console.error(error);
-        }
-        else {
-          peers = clients;
-        }
-
-        // Dont include the requester
-        let sanitizedPeers = peers.filter(id => id !== client.id);
-        console.log(`Client ${client.id} requesting peers in ${room}.\nPeers: ${sanitizedPeers.length > 0 ? sanitizedPeers : 'none'}`
-          );
-        client.emit('room.set.peers', sanitizedPeers);
-      })
-    }
-    else {
-      console.log('Noting')
-    }
-  });
+  client.on('room.join', Room.join.bind(client) );
+  client.on('room.leave', Room.leave.bind(client) );
+  client.on('room.get.members', Room.members.bind(client));
 
   client.on("disconnect", function(data) {
     console.log("disconnected", data)
