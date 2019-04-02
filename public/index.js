@@ -46,7 +46,7 @@ class UserRole {
 
 class User {
   constructor(){
-    this.uuid      = User.generateuUUIDv4();
+    this.uuid      = User.generateFakeUUID();
     this.role      = new UserRole();
     this.room      = null;
     this.transport = null;
@@ -70,6 +70,10 @@ class User {
       var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
     });
+  }
+
+  static generateFakeUUID() {
+    return 'abc';
   }
 }
 
@@ -108,8 +112,15 @@ class Room {
   }
 
   leave() {
-    this.socket.emit('room.join', this.defaultRoomId);
-    this.socket.on('room.leave.event', this.onLeave.bind(this));
+    this.socket.emit('room.leave', this.defaultRoomId);
+    this.socket.on('room.leave.event', member => {
+      if (member.id === this.socket.id) {
+        console.log('Left room');
+      }
+      else {
+        this.removeMember(member);
+      }
+    });
   }
 
   onLeave(member) {
@@ -141,6 +152,9 @@ class Room {
   }
 
   removeMember(member) {
+    if (!(member instanceof RoomMember)) {
+      member = new RoomMember(member, this.socket);
+    }
     if (member && member.id) {
       this.members = this.members.filter(_member => member.id !== _member.id);
       this.onMemberChange();
@@ -148,7 +162,12 @@ class Room {
   }
 
   onMemberChange() {
-    console.table(this.members)
+    console.table(this.members);
+    const roomList = document.getElementById("room-list");
+    roomList.innerHTML = ' ';
+    this.members.forEach(member => {
+      roomList.innerHTML += `<li class="state-to">${member.id} - ${member.role}</li>`;
+    });
   }
 
   getMemberById(id) {
@@ -171,7 +190,7 @@ class RoomMember {
 
   privateMessage(message) {
     if (message) {
-      this.socket.emit('private', { target: this.id, message})
+      this.socket.emit('private', { target: this.id, message: message });
     }
   }
 }
@@ -192,13 +211,9 @@ async function setup() {
         console.log("Callback triggered");
         member.privateMessage('ping');
       }
-      
+
     });
     user.room.getMembers();
-    
-    
-    
-    
 
     //user.transport.signaler.listenToIceCandidates();
     //user.transport.signaler.gatherIceCandidates();

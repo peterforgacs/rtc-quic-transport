@@ -1,0 +1,194 @@
+<!doctype html>
+<!--
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License
+-->
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="RTCQuicTransport demo application.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Material Design Lite</title>
+
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="images/android-desktop.png">
+
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="RTCQuicTransport demo">
+    <link rel="apple-touch-icon-precomposed" href="images/ios-desktop.png">
+
+    <!-- Tile icon for Win8 (144x144 + tile color) -->
+    <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+    <meta name="msapplication-TileColor" content="#3372DF">
+
+    <link rel="shortcut icon" href="images/favicon.png">
+
+    <!-- SEO: If your mobile URL is different from the desktop URL, add a canonical link to the desktop page https://developers.google.com/webmasters/smartphone-sites/feature-phones -->
+    <!--
+    <link rel="canonical" href="http://www.example.com/">
+    -->
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_purple-pink.min.css">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+      <header class="mdl-layout__header mdl-color--primary">
+        <div class="mdl-layout__header-row">
+          <span class="mdl-layout-spacer"></span>
+          <span class="mdl-layout-title">RTCQuicTransport Demo</span>
+          <span class="mdl-layout-spacer"></span>
+        </div>
+      </header>
+      <main class="mdl-layout__content">
+        <section style="margin-top: 48px; margin-bottom: 48px;" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+          <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white mdl-color--primary">
+            <i class="material-icons">home</i>
+          </header>
+          <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
+            <div class="mdl-card__supporting-text">
+              <h4>Welcome</h4>
+              This experiment is showcasing how the new RTCQuicTransport can be used to send files between peers.
+              Get started by inviting friends to your room.
+            </div>
+          </div>
+
+          <div class="mdl-card mdl-cell mdl-cell--12-col">
+              <div class="mdl-card__supporting-text mdl-grid">
+                <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                        <div class="mdl-card__title">
+                          <h2 class="mdl-card__title-text">Friends</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                          First share your invite link with your friends.
+                          <a id="invite-friends" class="mdl-button">Invite friends</a>
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                            <ul class="demo-list-control mdl-list">
+                                <li class="mdl-list__item">
+                                  <span class="mdl-list__item-primary-content">
+                                    <i class="material-icons  mdl-list__item-avatar">person</i>
+                                    Bryan Cranston
+                                  </span>
+                                  <span class="mdl-list__item-secondary-action">
+                                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="list-switch-1">
+                                        <input type="checkbox" id="list-switch-1" class="mdl-switch__input" />
+                                    </label>
+                                  </span>
+                                </li>
+                                <li class="mdl-list__item">
+                                  <span class="mdl-list__item-primary-content">
+                                    <i class="material-icons  mdl-list__item-avatar">person</i>
+                                    Aaron Paul
+                                  </span>
+                                  <span class="mdl-list__item-secondary-action">
+                                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="list-switch-2">
+                                        <input type="checkbox" id="list-switch-2" class="mdl-switch__input" />
+                                    </label>
+                                  </span>
+                                </li>
+                                <li class="mdl-list__item">
+                                  <span class="mdl-list__item-primary-content">
+                                    <i class="material-icons  mdl-list__item-avatar">person</i>
+                                    Bob Odenkirk
+                                  </span>
+                                  <span class="mdl-list__item-secondary-action">
+                                    <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="list-switch-3">
+                                      <input type="checkbox" id="list-switch-3" class="mdl-switch__input" />
+                                    </label>
+                                  </span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="mdl-card__menu">
+                          <button id="share" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                            <i class="material-icons">share</i>
+                            <div class="mdl-tooltip" data-mdl-for="share">
+                                Copy your invite link.
+                            </div>
+                          </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                    <div class="demo-card-wide mdl-card mdl-shadow--2dp">
+                        <div class="file-upload-header mdl-card__title">
+                          <h2 class="mdl-card__title-text">Files</h2>
+                        </div>
+                        <div class="mdl-card__supporting-text">
+                          Add files you want to send to your selected friend.
+                        </div>
+                        <div class="mdl-card__actions mdl-card--border">
+                            Nothing here yet.
+                        </div>
+                        <div class="mdl-card__menu">
+                          <label id="addfile" class="input-custom-file mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                            <i class="material-icons">add</i>
+                            <div class="mdl-tooltip" data-mdl-for="addfile">
+                                Add files
+                            </div>
+                            <input type="file">
+                          </label>
+                        </div>
+                      </div>
+                </div>
+              </div>
+              <div class="mdl-card__actions">
+
+                  <button class="mdl-button mdl-js-button mdl-button--icon">
+                    <div id="tt2" class="icon material-icons">send</div>
+                    <div class="mdl-tooltip" data-mdl-for="tt2">
+                      Send files to selected friend
+                    </div>
+                  </button>
+
+                  <button class="mdl-button mdl-js-button mdl-button--icon">
+                      <div id="tt3" class="icon material-icons">info</div>
+                      <div class="mdl-tooltip" data-mdl-for="tt3">
+                        Show technical details
+                      </div>
+                  </button>
+
+              </div>
+        </div>
+        </section>
+
+        <div id="demo-snackbar-example" class="mdl-js-snackbar mdl-snackbar">
+            <div class="mdl-snackbar__text"></div>
+            <button class="mdl-snackbar__action" type="button"></button>
+        </div>
+        <footer class="mdl-mini-footer">
+          <div class="mdl-mini-footer--center-section">
+            <div class="mdl-logo">
+              Made with ❤ by Peter Forgacs
+            </div>
+            <ul class="mdl-mini-footer--link-list">
+              <li><a href="http://sexybuddha.hu">Contact</a></li>
+            </ul>
+          </div>
+        </footer>
+      </main>
+    </div>
+    <script src="./js/gui.js"></script>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  </body>
+</html>

@@ -33,27 +33,27 @@ class Room {
     io.in(room).emit('room.leave.event', { id: this.id, role: this.role });
   }
 
-  static async members(room) {
-    const findMemberObject = memberId => {
-      return io.sockets.connected[memberId]
-    };
-
-    const findMembersOfRoom = (room) => {
-      return new Promise((resolve) => {
-        io.of('/').in(room).clients(( error, memberIds ) => {
-          if (error){
-            console.error(error);
-            return resolve([]);
-          }
-          else {
-            const members = memberIds.map(findMemberObject);
-            return resolve(members);
-          }
-        });
+  static getAllMembers(room) {
+    return new Promise((resolve) => {
+      io.of('/').in(room).clients(( error, memberIds ) => {
+        if (error){
+          console.error(error);
+          return resolve([]);
+        }
+        else {
+          const members = memberIds.map(Room.getMemberObject);
+          return resolve(members);
+        }
       });
-    };
+    });
+  };
 
-    const membersAll = await findMembersOfRoom(room);
+  static getMemberObject(memberId) {
+    return io.sockets.connected[memberId]
+  }
+
+  static async members(room) {
+    const membersAll = await Room.getAllMembers(room);
     const membersWithoutSelf = membersAll.filter(member => member.id !== this.id );
     let publicMembers = [];
 
@@ -66,7 +66,6 @@ class Room {
     else {
       publicMembers = [];
     }
-
 
     publicMembers = publicMembers.map(member => ({ id: member.id, role: member.role }));
     console.log(`Client ${this.id} requesting members of room ${room}.\nPeers: ${publicMembers.length > 0 ? publicMembers : 'none'}`);
@@ -89,8 +88,5 @@ io.on('connection', function(client){
   client.on('room.join', Room.join.bind(client) );
   client.on('room.leave', Room.leave.bind(client) );
   client.on('room.get.members', Room.members.bind(client));
-
-  client.on("disconnect", function(data) {
-    console.log("disconnected", data)
-  });
+  client.on("disconnect", () => console.log(`Disconnect of ${client.id}`));
 });
