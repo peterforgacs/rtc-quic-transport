@@ -1,9 +1,9 @@
 'use strict';
-var inviteFriendsButton = document.querySelector("#invite-friends");
+var roomInviteButton = document.querySelector("#room-invite-button");
 var snackbarContainer = document.querySelector('#demo-snackbar-example');
-inviteFriendsButton.addEventListener('click', function () {
+roomInviteButton.addEventListener('click', function () {
 	var data = {
-		message: 'Your invite url has been copied to your clipboard.',
+		message: 'Your room invite link has been copied to your clipboard.',
 		timeout: 5000
 	  };
 	snackbarContainer.MaterialSnackbar.showSnackbar(data);

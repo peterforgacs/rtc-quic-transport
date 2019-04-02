@@ -50,7 +50,7 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
-    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <div class="mdl-layout mdl-js-layout">
       <header class="mdl-layout__header mdl-color--primary">
         <div class="mdl-layout__header-row">
           <span class="mdl-layout-spacer"></span>
@@ -59,6 +59,7 @@
         </div>
       </header>
       <main class="mdl-layout__content">
+        <!-- welcome-->
         <section style="margin-top: 48px; margin-bottom: 48px;" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
           <header class="section__play-btn mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white mdl-color--primary">
             <i class="material-icons">home</i>
@@ -70,17 +71,27 @@
               Get started by inviting friends to your room.
             </div>
           </div>
-
+          <!-- /welcome-->
           <div class="mdl-card mdl-cell mdl-cell--12-col">
-              <div class="mdl-card__supporting-text mdl-grid">
+              <div class="mdl-grid">
+                <!-- friends-explanation-->
+                <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                    <div class="mdl-card__supporting-text">
+                        <h4>Friends</h4>
+                        <p>In order to test the features you need an other friend to join your room.</p>
+                        <p>You can also test the features by opening a new browser window tab.</p>
+                        <!-- Accent-colored raised button with ripple -->
+                        <button id="room-invite-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--secondary">
+                          Copy room invite link
+                        </button>
+                      </div>
+                </div>
+                <!-- /friends-explanation-->
+                <!-- friends-list -->
                 <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
                     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title">
-                          <h2 class="mdl-card__title-text">Friends</h2>
-                        </div>
-                        <div class="mdl-card__supporting-text">
-                          First share your invite link with your friends.
-                          <a id="invite-friends" class="mdl-button">Invite friends</a>
+                          <h2 class="mdl-card__title-text">Room</h2>
                         </div>
                         <div class="mdl-card__actions mdl-card--border">
                             <ul class="demo-list-control mdl-list">
@@ -119,16 +130,28 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="mdl-card__menu">
-                          <button id="share" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                            <i class="material-icons">share</i>
-                            <div class="mdl-tooltip" data-mdl-for="share">
-                                Copy your invite link.
-                            </div>
-                          </button>
-                        </div>
                     </div>
                 </div>
+                <!-- /friends-list -->
+                <!-- file-explation-->
+                <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
+                    <div class="mdl-card__supporting-text">
+                        <h4>Files</h4>
+                        <p>You can send any kind of file.</p>
+                        <button id="file-add-button" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--secondary">
+                            <label id="addfile" class="input-custom-file mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+                                <i class="material-icons">add</i>
+                                <div class="mdl-tooltip" data-mdl-for="addfile">
+                                    Add files
+                                </div>
+                                <input type="file">
+                              </label>
+                        </button>
+                      </div>
+                </div>
+                <!-- /file-explation-->
+
+                <!-- file-list-->
                 <div class="mdl-cell mdl-cell--6-col-desktop mdl-cell--12-col-tablet mdl-cell--12-col-phone">
                     <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                         <div class="file-upload-header mdl-card__title">
@@ -138,16 +161,35 @@
                           Add files you want to send to your selected friend.
                         </div>
                         <div class="mdl-card__actions mdl-card--border">
-                            Nothing here yet.
+                                <ul class="demo-list-control mdl-list">
+                                    <li class="mdl-list__item">
+                                      <span class="mdl-list__item-primary-content">
+                                          <i class="material-icons  mdl-list__item-avatar">attach_file</i>
+                                          file1
+                                      </span>
+                                      <span class="mdl-list__item-secondary-action">
+                                      </span>
+                                    </li>
+                                    <li class="mdl-list__item">
+                                      <span class="mdl-list__item-primary-content">
+                                        <i class="material-icons  mdl-list__item-avatar">attach_file</i>
+                                        file2
+                                      </span>
+                                      <span class="mdl-list__item-secondary-action">
+
+                                    </li>
+                                    <li class="mdl-list__item">
+                                      <span class="mdl-list__item-primary-content">
+                                          <i class="material-icons  mdl-list__item-avatar">attach_file</i>
+                                          file3
+                                      </span>
+                                      <span class="mdl-list__item-secondary-action">
+
+                                      </span>
+                                    </li>
+                                </ul>
                         </div>
                         <div class="mdl-card__menu">
-                          <label id="addfile" class="input-custom-file mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-                            <i class="material-icons">add</i>
-                            <div class="mdl-tooltip" data-mdl-for="addfile">
-                                Add files
-                            </div>
-                            <input type="file">
-                          </label>
                         </div>
                       </div>
                 </div>
@@ -169,7 +211,8 @@
                   </button>
 
               </div>
-        </div>
+          </div>
+          <!-- /file-list-->
         </section>
 
         <div id="demo-snackbar-example" class="mdl-js-snackbar mdl-snackbar">
