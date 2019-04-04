@@ -99,7 +99,7 @@ html, body {
 .mdl-demo .mdl-card__supporting-text + .mdl-card__actions {
   border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
-.mdl-demo #add {
+.mdl-demo #contact-button {
   position: absolute;
   right: 40px;
   top: 36px;
@@ -246,7 +246,8 @@ html, body {
   margin-bottom: 40px;
   z-index: 900;
 }
-/* Friends */
+
+/*
 .demo-list-control {
   width: 300px;
 }
@@ -258,12 +259,25 @@ html, body {
 .demo-card-wide.mdl-card {
   width: 100%;
 }
-.demo-card-wide > .mdl-card__title {
+*/
+
+.mdl-card__title {
   color: #fff;
-  height: 176px;
-  background: url('http://www.getmdl.io/assets/demos/welcome_card.jpg') center / cover;
+  background-color: rgb(103,58,183);
 }
 
+.mdl-card__menu {
+  color: #fff;
+}
+
+#add-files-button input[type=file] {
+  display: none;
+}
+
+#transporter .mdl-tabs__tab {
+  color: #fff;
+}
+/*
 .demo-card-wide > .file-upload-header  {
   color: #fff;
   height: 176px;
@@ -273,14 +287,14 @@ html, body {
   color: #fff;
 }
 
-/* Add file */
 label.input-custom-file input[type=file] {
   display: none;
 }
 
-/* Welcome */ 
+
 
 .double-line-card-action {
   border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
+*/

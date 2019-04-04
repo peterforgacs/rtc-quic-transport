@@ -1,8 +1,8 @@
 'use strict';
 var roomInviteButton = document.querySelector("#room-invite-button");
 var snackbarContainer = document.querySelector('#demo-snackbar-example');
-roomInviteButton.addEventListener('click', function () {
-	var data = {
+var copyInvitationUri = function () {
+    var data = {
 		message: 'Your room invite link has been copied to your clipboard.',
 		timeout: 5000
 	  };
@@ -21,5 +21,10 @@ roomInviteButton.addEventListener('click', function () {
     window.addEventListener('copy', copy);
     document.execCommand('copy');
     window.removeEventListener('copy', copy);
-});
+}
+roomInviteButton.addEventListener('click', copyInvitationUri);
 
+var contactButton = document.querySelector("#contact-button");
+contactButton.addEventListener('click', function () {
+    window.redirect('mailto://hello@sexybuddha.hu')
+});
