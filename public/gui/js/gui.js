@@ -1,5 +1,6 @@
 'use strict';
 var roomInviteButton = document.querySelector("#room-invite-button");
+var contactButton = document.querySelector("#contact-button");
 var snackbarContainer = document.querySelector('#demo-snackbar-example');
 var copyInvitationUri = function () {
     var data = {
@@ -22,9 +23,10 @@ var copyInvitationUri = function () {
     document.execCommand('copy');
     window.removeEventListener('copy', copy);
 }
-roomInviteButton.addEventListener('click', copyInvitationUri);
 
-var contactButton = document.querySelector("#contact-button");
-contactButton.addEventListener('click', function () {
-    window.redirect('mailto://hello@sexybuddha.hu')
-});
+var sendMail = function () {
+    window.location = "mailto:hello@sexybuddha.hu"
+}
+
+roomInviteButton.addEventListener('click', copyInvitationUri);
+contactButton.addEventListener('click', sendMail);
