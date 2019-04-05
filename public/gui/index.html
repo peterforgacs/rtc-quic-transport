@@ -114,7 +114,7 @@
 							</div>
 						</div>
 
-						<section id="room" class="mdl-tabs__panel demo-card-wide mdl-card mdl-cell--12-col is-active">
+						<section id="room" class="mdl-tabs__panel demo-card-wide mdl-card mdl-cell--12-col">
 							<div class="mdl-card__supporting-text">
 								Select a user from the list to establish the connection.
 							</div>
@@ -165,69 +165,71 @@
 							</div>
 						</section>
 
-						<section id="files" class="mdl-tabs__panel demo-card-wide mdl-card mdl-cell mdl-cell--12-col">
-							<div class="mdl-card__supporting-text">
-								Select files to upload
-							</div>
-							<div class="mdl-card__actions mdl-card--border">
+						<section id="files" class="mdl-tabs__panel demo-card-wide mdl-card mdl-cell--12-col is-active">
+								<div class="mdl-card__supporting-text">
+										Select files to upload to the selected peer.
+								</div>
+								<div class="mdl-card__actions mdl-card--border">
 								<ul class="demo-list-control mdl-list">
-									<li class="mdl-list__item">
-										<span class="mdl-list__item-primary-content">
-											<i class="material-icons  mdl-list__item-avatar">folder</i>
-											1.txt
-										</span>
-										<span class="mdl-list__item-secondary-action">
-											<button id="remove-file-1-button"
-												class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect ">
-												<i class="material-icons">close</i>
-											</button>
-											<div class="mdl-tooltip" data-mdl-for="remove-file-1-button">
-												Remove file
-											</div>
-										</span>
-									</li>
-									<li class="mdl-list__item">
-										<span class="mdl-list__item-primary-content">
-											<i class="material-icons  mdl-list__item-avatar">folder</i>
-											1.txt
-										</span>
-										<span class="mdl-list__item-secondary-action">
-											<button id="remove-file-2-button"
-												class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect ">
-												<i class="material-icons">close</i>
-											</button>
-											<div class="mdl-tooltip" data-mdl-for="remove-file-2-button">
-												Remove file
-											</div>
-										</span>
-									</li>
-									<li class="mdl-list__item">
-										<span class="mdl-list__item-primary-content">
-											<i class="material-icons  mdl-list__item-avatar">folder</i>
-											2.txt
-										</span>
-										<span class="mdl-list__item-secondary-action">
-											<button id="remove-file-3-button"
-												class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect ">
-												<i class="material-icons">close</i>
-											</button>
-											<div class="mdl-tooltip" data-mdl-for="remove-file-3-button">
-												Remove file
-											</div>
-										</span>
-									</li>
+										<li class="mdl-list__item">
+												<span class="mdl-list__item-primary-content">
+													<i class="material-icons  mdl-list__item-icon">folder</i>
+													1.txt
+												</span>
+												<span class="mdl-list__item-secondary-action">
+													<button id="remove-file-1-button"
+														class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect ">
+														<i class="material-icons">close</i>
+													</button>
+													<div class="mdl-tooltip" data-mdl-for="remove-file-1-button">
+														Remove file
+													</div>
+												</span>
+											</li>
+											<li class="mdl-list__item">
+												<span class="mdl-list__item-primary-content">
+													<i class="material-icons  mdl-list__item-icon">folder</i>
+													1.txt
+												</span>
+												<span class="mdl-list__item-secondary-action">
+													<button id="remove-file-2-button"
+														class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect ">
+														<i class="material-icons">close</i>
+													</button>
+													<div class="mdl-tooltip" data-mdl-for="remove-file-2-button">
+														Remove file
+													</div>
+												</span>
+											</li>
+											<li class="mdl-list__item">
+												<span class="mdl-list__item-primary-content">
+													<i class="material-icons  mdl-list__item-icon">folder</i>
+													2.txt
+												</span>
+												<span class="mdl-list__item-secondary-action">
+													<button id="remove-file-3-button"
+														class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect ">
+														<i class="material-icons">close</i>
+													</button>
+													<div class="mdl-tooltip" data-mdl-for="remove-file-3-button">
+														Remove file
+													</div>
+												</span>
+											</li>
 								</ul>
 							</div>
-							<div class="mdl-card__menu">
-								<label id="add-files-button" class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect ">
-									<input type="file">
-									<i class="material-icons">add</i>
-								</label>
-								<div class="mdl-tooltip" data-mdl-for="add-files-button">
-									Add files
+								<div class="mdl-card__actions mdl-card--border">
+									<!-- 	
+									<a id='room-invite-button' class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+												Add files
+											</a>
+											-->
+									<label id="add-files-button" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect ">
+											<input type="file">
+											Add files
+									</label>
 								</div>
-							</div>
-						</section>
+							</section>
 
 						<section id="stats" class="mdl-tabs__panel demo-card-wide mdl-card mdl-cell mdl-cell--12-col">
 							<h4>Packets</h4>
@@ -331,7 +333,7 @@
 					</div>
 				</section>
 
-				<div id="demo-snackbar-example" class="mdl-js-snackbar mdl-snackbar">
+				<div id="snackbar" class="mdl-js-snackbar mdl-snackbar">
 					<div class="mdl-snackbar__text"></div>
 					<button class="mdl-snackbar__action" type="button"></button>
 				</div>

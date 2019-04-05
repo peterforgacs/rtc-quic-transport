@@ -53,6 +53,12 @@ html, body {
   background-color: white;
   height: 4px;
 }
+
+.mdl-demo .mdl-layout__tab-bar .mdl-tabs__tab.is-active::after {
+  background-color: white;
+  height: 4px;
+}
+
 .mdl-demo main > .mdl-layout__tab-panel {
   padding-top: 48px;
 }
@@ -82,12 +88,16 @@ html, body {
   margin-bottom: 20px;
 }
 
-.mdl-demo .mdl-card__actions a {
+.mdl-demo .mdl-card__actions a,
+.mdl-demo .mdl-card__actions label {
   color: #00BCD4;
   margin: 0;
 }
+
 .mdl-demo .mdl-card__actions a:hover,
-.mdl-demo .mdl-card__actions a:active {
+.mdl-demo .mdl-card__actions a:active,
+.mdl-demo .mdl-card__actions label:active
+.mdl-demo .mdl-card__actions label:hover {
   color: inherit;
   background-color: transparent;
 }
@@ -110,7 +120,7 @@ html, body {
   margin-bottom: 0;
 }
 
-#room {
+#room, #files {
   width: 100%;
 }
 
@@ -118,11 +128,6 @@ html, body {
   padding-left: 25px;
   padding-right: 25px;
 }
-
-/*
-#room .mdl-card__actions {
-  padding: 0;
-}*/
 
 #room .mdl-card__actions ul {
   margin-bottom: 0;
@@ -282,6 +287,11 @@ html, body {
 
 #transporter .mdl-tabs__tab {
   color: #fff;
+}
+#files .mdl-list__item-icon {
+  width: 40px;
+  height: 40px;
+  font-size: 40px;
 }
 
 footer {

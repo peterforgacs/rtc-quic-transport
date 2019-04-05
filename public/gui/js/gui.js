@@ -1,32 +1,34 @@
 'use strict';
 var roomInviteButton = document.querySelector("#room-invite-button");
 var contactButton = document.querySelector("#contact-button");
-var snackbarContainer = document.querySelector('#demo-snackbar-example');
-var copyInvitationUri = function () {
+var snackbar = document.querySelector('#snackbar');
+
+function copyToClipboard(e)  {
+    e.preventDefault();
+    console.log('copy');
+    var text = "blabla"
+    if (e.clipboardData) {
+        e.clipboardData.setData('text/plain', text);
+    } else if (window.clipboardData) {
+        window.clipboardData.setData('Text', text);
+    }
+}
+
+function copyInvitationLink() {
     var data = {
 		message: 'Your room invite link has been copied to your clipboard.',
 		timeout: 5000
 	  };
-	snackbarContainer.MaterialSnackbar.showSnackbar(data);
+	snackbar.MaterialSnackbar.showSnackbar(data);
 
-	var copy = function (e) {
-        e.preventDefault();
-        console.log('copy');
-        var text = "blabla"
-        if (e.clipboardData) {
-            e.clipboardData.setData('text/plain', text);
-        } else if (window.clipboardData) {
-            window.clipboardData.setData('Text', text);
-        }
-    }
-    window.addEventListener('copy', copy);
+    window.addEventListener('copy', copyToClipboard);
     document.execCommand('copy');
-    window.removeEventListener('copy', copy);
+    window.removeEventListener('copy', copyToClipboard);
 }
 
-var sendMail = function () {
+function sendMail () {
     window.location = "mailto:hello@sexybuddha.hu"
 }
 
-roomInviteButton.addEventListener('click', copyInvitationUri);
+roomInviteButton.addEventListener('click', copyInvitationLink);
 contactButton.addEventListener('click', sendMail);
