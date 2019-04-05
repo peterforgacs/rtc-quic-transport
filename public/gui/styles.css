@@ -54,7 +54,6 @@ html, body {
   height: 4px;
 }
 .mdl-demo main > .mdl-layout__tab-panel {
-  padding: 8px;
   padding-top: 48px;
 }
 .mdl-demo .mdl-card {
@@ -110,6 +109,11 @@ html, body {
   position: relative;
   margin-bottom: 48px;
 }
+
+#room, #files, #stats {
+  margin-bottom: 0;
+}
+
 .mdl-demo section.section--center {
   max-width: 860px;
 }
@@ -247,20 +251,6 @@ html, body {
   z-index: 900;
 }
 
-/*
-.demo-list-control {
-  width: 300px;
-}
-
-.demo-list-radio {
-  display: inline;
-}
-
-.demo-card-wide.mdl-card {
-  width: 100%;
-}
-*/
-
 .mdl-card__title {
   color: #fff;
   background-color: rgb(103,58,183);
@@ -277,24 +267,7 @@ html, body {
 #transporter .mdl-tabs__tab {
   color: #fff;
 }
-/*
-.demo-card-wide > .file-upload-header  {
-  color: #fff;
-  height: 176px;
-  background: url('https://www.oxygenna.com/wp-content/uploads/2015/11/18.jpg') center / cover;
+
+footer {
+  margin-top: 48px;
 }
-.demo-card-wide > .mdl-card__menu {
-  color: #fff;
-}
-
-label.input-custom-file input[type=file] {
-  display: none;
-}
-
-
-
-.double-line-card-action {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-}
-
-*/
