@@ -30,5 +30,41 @@ function sendMail () {
     window.location = "mailto:hello@sexybuddha.hu"
 }
 
+function updateProgressBar () {
+    this.MaterialProgress.setProgress(44);
+}
+
+function fadeIn(el) {
+    el.style.opacity = 0;
+    var last = +new Date();
+    var tick = function() {
+      el.style.opacity = +el.style.opacity + (new Date() - last) / 400;
+      last = +new Date();
+      if (+el.style.opacity < 1) {
+        (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
+      }
+    };
+    tick();
+}
+
+function toggleFileStats() {
+    var isHidden = document.querySelector("#stats-file").style.display === "none";
+
+    if (isHidden){
+        document.querySelector("#stats-file").style.opacity = 0;
+        document.querySelector("#stats-file").style.display = 'block';
+        document.querySelector("#info-file-1-icon").innerHTML = 'unfold_less';
+        fadeIn(document.querySelector("#stats-file"));
+    }
+    else {
+        document.querySelector("#stats-file").style.display = 'none';
+        document.querySelector("#info-file-1-icon").innerHTML = 'unfold_more';
+    }
+}
+
+
+
+document.querySelector('#info-file-1-button').addEventListener('click', toggleFileStats);
+document.querySelector('#file-1-progress').addEventListener('mdl-componentupgraded', updateProgressBar);
 roomInviteButton.addEventListener('click', copyInvitationLink);
 contactButton.addEventListener('click', sendMail);
