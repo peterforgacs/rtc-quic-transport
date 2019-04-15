@@ -1,59 +1,147 @@
 <!doctype html>
 <html lang="en">
 
-	<head>
-		<meta charset="utf-8">
-		<title>Sexy Buddha Team - Simply The Best</title>
-		<meta name="description" content="We‘re a developer team that plans, builds & launches media apps. We are building products for technology pioneer companies with big ideas.">
-		<link rel="canonical" href="http://sexybuddha.hu/" />
-		<meta name="robots" content="index, follow">
-		<meta name="viewport" content="width=device-width,initial-scale=1">
-		<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-		<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-		<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-		<style>
-			html, body {
-				font-family: 'Roboto', 'Helvetica', sans-serif;
-				margin: 0;
-				padding: 0;
-				min-width: 320px;
-			}
+<head>
+	<meta charset="utf-8">
+	<title>Sexy Buddha Team - Simply The Best</title>
+	<meta name="description"
+		content="We‘re a developer team that plans, builds & launches media apps. We are building products for technology pioneer companies with big ideas.">
+	<link rel="canonical" href="http://sexybuddha.hu/" />
+	<meta name="robots" content="index, follow">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.deep_purple-pink.min.css">
+	<link rel="stylesheet" href="./style.css">
+	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+</head>
 
-			.landing-page {
-				margin: 0;
-			}
+<body class="landing-page mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+		<header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+			<div class="mdl-layout--large-screen-only mdl-layout__header-row">
+			</div>
+			<div class="mdl-layout--large-screen-only mdl-layout__header-row">
+				<h3>Sexy Buddha</h3>
+			</div>
+			<div class="mdl-layout--large-screen-only mdl-layout__header-row">
+			</div>
+			<div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+				<a href="../index.html" class="mdl-layout__tab is-active">HOME</a>
+				<a href="../lab/gui/index.html" class="mdl-layout__tab">LAB</a>
+				<a href="#rtc-quic-transport-demo" class="mdl-layout__tab">JOBS</a>
+				<button
+					class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent"
+					id="contact-button">
+					<i class="material-icons" role="presentation">email</i>
+					<span class="visuallyhidden">Contact</span>
+				</button>
+				<div class="mdl-tooltip" data-mdl-for="contact-button">
+					Say Hello!
+				</div>
+			</div>
+	</header>
 
-			.landing-page .background {
-				height: 100vh;
-				background: #2980b9 url('https://res.cloudinary.com/sexybuddha/image/upload/v1555074436/website/sexy_buddha_logo_background.png')repeat 0 0;;
-				-webkit-animation: 10s linear 0s normal none infinite animate;
-				-moz-animation: 10s linear 0s normal none infinite animate;
-				-ms-animation: 10s linear 0s normal none infinite animate;
-				-o-animation: 10s linear 0s normal none infinite animate;
-				animation: 10s linear 0s normal none infinite animate;
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-			}
+	<section class="skills section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+		<div class="mdl-card mdl-cell mdl-cell--12-col">
+		  <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+			<h4 class="mdl-cell mdl-cell--12-col">Skills</h4>
+			<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+			  <div class="skill-circle section__circle-container__circle mdl-color--primary">
+				<i class="material-icons mdl-color-text--primary-contrast">settings</i>
+			  </div>
+			</div>
+			<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+			  <h5>Developing Node.js microsvervices</h5>
+			  Designing and managing microservice architectures.
+			</div>
+			<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+				<div class="skill-circle section__circle-container__circle mdl-color--primary">
+					<i class="material-icons mdl-color-text--primary-contrast">cloud</i>
+				</div>
+			  </div>
+			<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+			  <h5>Deploying services on the cloud</h5>
+			  Dockerizing applications and deploying them on cloud services.
+			</div>
 
-			.landing-page navigation {
-				display: flex;
-				padding: 2rem;
-			}
+			<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+				<div class="skill-circle section__circle-container__circle mdl-color--primary">
+					<i class="material-icons mdl-color-text--primary-contrast">people</i>
+				</div>
+			  </div>
+			<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+				<h5>Building peer to peer systems</h5>
+				Real time communication systems with peer to peer focus.
+			  </div>
 
-			.landing-page navigation * {
-				margin: 5px;
-			}
+			  <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+				<div class="skill-circle section__circle-container__circle mdl-color--primary">
+					<i class="material-icons mdl-color-text--primary-contrast">videocam</i>
+				</div>
+			  </div>
+			<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+				<h5>Creating streaming solutions</h5>
+				Peer to peer multimedia streaming solutions.
+			  </div>
+		  </div>
+		  <div class="mdl-card__actions">
+			<a href="#" class="mdl-button">More</a>
+		  </div>
+		</div>
+	  </section>
 
-			.mdl-button { height: 50px; width: 100px }
-		</style>
-	</head>
+	  <section class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+		<div class="mdl-card mdl-cell mdl-cell--12-col">
+		  <div class="mdl-card__supporting-text mdl-grid mdl-grid--no-spacing">
+			<h4 class="mdl-cell mdl-cell--12-col">Technology</h4>
+			<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+			  <div class="skill-circle section__circle-container__circle mdl-color--primary">
+				<i class="material-icons mdl-color-text--primary-contrast">settings</i>
+			  </div>
+			</div>
+			<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+			  <h5>Node.js</h5>
+			  Designing and managing microservice architectures.
+			</div>
+			<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+				<div class="skill-circle section__circle-container__circle mdl-color--primary">
+					<i class="material-icons mdl-color-text--primary-contrast">cloud</i>
+				</div>
+			  </div>
+			<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+			  <h5>Deploying services on the cloud</h5>
+			  Dockerizing applications and deploying them on cloud services.
+			</div>
 
-	<body class="landing-page">
-		<section class="container">
-			<section class="background ">
-				<img id="logo" srcset="
+			<div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+				<div class="skill-circle section__circle-container__circle mdl-color--primary">
+					<i class="material-icons mdl-color-text--primary-contrast">people</i>
+				</div>
+			  </div>
+			<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+				<h5>Building peer to peer systems</h5>
+				Real time communication systems with peer to peer focus.
+			  </div>
+
+			  <div class="section__circle-container mdl-cell mdl-cell--2-col mdl-cell--1-col-phone">
+				<div class="skill-circle section__circle-container__circle mdl-color--primary">
+					<i class="material-icons mdl-color-text--primary-contrast">videocam</i>
+				</div>
+			  </div>
+			<div class="section__text mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--3-col-phone">
+				<h5>Creating streaming solutions</h5>
+				Peer to peer multimedia streaming solutions.
+			  </div>
+		  </div>
+		  <div class="mdl-card__actions">
+			<a href="#" class="mdl-button">More</a>
+		  </div>
+		</div>
+	  </section>
+	<!--
+	<section class="container">
+		<section class="welcome">
+			<!--<img id="logo" srcset="
 		https://res.cloudinary.com/sexybuddha/image/upload/c_scale,q_80,w_320/v1555074436/website/sexy_buddha_logo.png 320w,
 		https://res.cloudinary.com/sexybuddha/image/upload/c_scale,q_80,w_480/v1555074436/website/sexy_buddha_logo.png 480w,
 		https://res.cloudinary.com/sexybuddha/image/upload/c_scale,q_80,w_500/v1555074436/website/sexy_buddha_logo.png 500w"
@@ -62,10 +150,12 @@
 		(max-width: 480px) 440px,
 		500px" src="https://res.cloudinary.com/sexybuddha/image/upload/v1555074436/website/sexy_buddha_logo.png"
 					alt="Sexy Buddha logo" />
+			<h1>Sexy Buddha</h1>
+			<h4>We are a team from Hungary specialized in modern real time web technology</h4>
 
-
+			
 				<navigation>
-					<!-- Accent-colored raised button with ripple -->
+					 Accent-colored raised button with ripple 
 					<button  onclick="window.location.href='./lab/gui/index.html' " class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
 							<i class="material-icons">whatshot</i>LAB
 					</button>
@@ -75,6 +165,40 @@
 					</button>
 
 				</navigation>
-			</section>
+			<button
+				class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent"
+				id="contact-button">
+				<i class="material-icons" role="presentation">email</i>
+				<span class="visuallyhidden">Contact</span>
+			</button>
+			<div class="mdl-tooltip" data-mdl-for="contact-button">
+				Say Hello!
+			</div>
 		</section>
-	</body>
+
+
+		<section class="skills">
+			<h3>Unique set of skills</h3>
+		</section>
+
+		<section class="technology">
+			<h3>Technologies</h3>
+		</section>
+
+		<section class="work">
+			<h3>Projects</h3>
+		</section>
+
+	</section>-->
+	<footer class="mdl-mini-footer">
+		<div class="mdl-mini-footer--center-section">
+			<div class="mdl-logo">
+				Made with ❤ by Sexy Buddha Team
+			</div>
+			<ul class="mdl-mini-footer--link-list">
+				<li><a href="http://sexybuddha.hu">Contact</a></li>
+			</ul>
+		</div>
+	</footer>
+	</div>
+</body>
