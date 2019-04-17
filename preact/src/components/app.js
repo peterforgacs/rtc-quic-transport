@@ -28,6 +28,7 @@ export default class App extends Component {
 		return (
 			<Container>
 				<Header />
+				<main class="mdl-layout__content">
 				<Router onChange={this.handleRoute}>
 					<Home path="/" />
 					<Lab path="/lab" />
@@ -35,7 +36,9 @@ export default class App extends Component {
 					<Profile path="/profile/" user="me" />
 					<Profile path="/profile/:user" />
 				</Router>
+				</main>
 				<Footer />
+				<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 			</Container>
 		);
 	}
