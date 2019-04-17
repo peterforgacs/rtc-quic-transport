@@ -1,3 +1,4 @@
 node_modules/
 chat-example/
 RTCQuicTransport-Origin-Trial-Documentation/
+.DS_STORE
