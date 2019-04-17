@@ -1,7 +1,9 @@
+import styles from './style.css';
+
 const Lab = () => (
 	<span>
 
-	<section id="welcome" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+	<section class="welcome section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
 		<header
 			class="mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white mdl-color--primary">
 			<i class="material-icons">home</i>

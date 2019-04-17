@@ -1,0 +1,12 @@
+.mdl-card__title {
+	color: #fff;
+	background-color: rgb(103,58,183);
+  }
+
+.mdl-card__menu {
+color: #fff;
+}
+
+.job > header {
+min-height: 200px;
+}
