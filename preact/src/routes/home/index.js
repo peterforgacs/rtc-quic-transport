@@ -68,7 +68,6 @@ const Home = () => (
 		<section
 				style="width: 100vw;"
 				class="mdl-grid mdl-shadow--2dp mdl-color--primary mdl-color-text--primary-contrast project-banner mdl-color--primary-dark">
-			
 			<h3 style="
 			width: 100%; text-align:center;" class="">Projects</h3>
 			</section>

@@ -1,45 +1,101 @@
+import { h, Component } from 'preact';
 import style from './style.css';
 
-const Jobs = () => (
-  <span>
+const JobChip = props => (
+  <span class="mdl-chip">
+    <span class="mdl-chip__text">{props.text}</span>
+  </span>
+);
+
+const JobDialog = (props) => (
+  <dialog id={props.id} class="mdl-dialog">
+    <h4 class="mdl-dialog__title">{props.title}</h4>
+    <div class="mdl-dialog__content">
+      { props.children }
+    </div>
+    <div class="mdl-dialog__actions">
+      <a href={props.applyAt} type="button" class="mdl-button">Apply</a>
+      <button type="button" class="mdl-button close">Close</button>
+    </div>
+  </dialog>
+);
+
+class Job extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      id: this.uuidv4(),
+      dialog: null
+     };
+  }
+
+  uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+    });
+  }
+
+  componentDidMount() {
+    this.setState( () => ({ dialog: document.getElementById(this.state.id)}), this.polyfillDialog.bind(this));
+  }
+
+  polyfillDialog() {
+    if (this.state.dialog){
+      if (!this.state.dialog.showModal) {
+        console.log('Registering showmodal');
+        dialogPolyfill.registerDialog(this.state.dialog);
+      }
+
+      this.state.dialog.querySelector('.close').addEventListener('click', () => {
+        this.state.dialog.close();
+      });
+    }
+  }
+
+  render(){
+    const { title, description, chips, applyAt, icon, children } = this.props;
+    const { id, dialog } = this.state;
+    const hasChips = chips && chips.length > 0;
+
+    return (
+    <span>
     <section class="job section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-      <header class="mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white mdl-color--primary">
-        <i class="material-icons">settings</i>
+      <header
+        class="mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white mdl-color--primary">
+        <i class="material-icons">{ icon }</i>
       </header>
       <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
         <div class="mdl-card__supporting-text">
-          <h4>PHP Developer</h4>
-          <p>
-            Looking for an experienced PHP developer for maintaining and
-            developing a payment platform.
-          </p>
-
-          <span class="mdl-chip">
-            <span class="mdl-chip__text">Senior</span>
-          </span>
-
-          <span class="mdl-chip">
-            <span class="mdl-chip__text">Full time</span>
-          </span>
-
-          <span class="mdl-chip">
-            <span class="mdl-chip__text">Remote</span>
-          </span>
+          <h4>{ title }</h4>
+          <p>{ description }</p>
+          { hasChips ? chips.map(chip => <JobChip text={chip} />) : null}
         </div>
         <div class="mdl-card__actions">
-          <a id="job-php-details-button" href="#" class="mdl-button">
-            Details
-          </a>
-          <a href="https://forms.gle/jEGAscY8873F3GS78" class="mdl-button">
-            Apply
-          </a>
+          <a onClick={() => this.state.dialog.showModal()} href="#" class="mdl-button">Details</a>
+          <a href={applyAt} class="mdl-button">Apply</a>
         </div>
       </div>
     </section>
+    <JobDialog id={id} title={title} applyAt={applyAt}>
+      { children }
+    </JobDialog>
+    </span>
+    )
+  }
+}
 
-    <dialog id="job-php-details" class="mdl-dialog">
-      <h4 class="mdl-dialog__title">PHP Developer</h4>
-      <div class="mdl-dialog__content">
+
+const Jobs = () => (
+  <span>
+
+    <Job
+    title="PHP Developer"
+    description="Looking for an experienced PHP developer for maintaining and developing a payment platform."
+    icon="settings"
+    chips={['Senior', 'Full time', 'Remote']}
+    applyAt="https://forms.gle/jEGAscY8873F3GS78">
         <p>
           Looking for an experienced PHP developer for maintaining and
           developing a payment platform.
@@ -55,59 +111,14 @@ const Jobs = () => (
           <li>Strong PHP knowledge</li>
           <li>Experience with amember framework</li>
         </ul>
-      </div>
-      <div class="mdl-dialog__actions">
-        <a
-          href="https://forms.gle/jEGAscY8873F3GS78"
-          type="button"
-          class="mdl-button"
-        >
-          Apply
-        </a>
-        <button type="button" class="mdl-button close">
-          Close
-        </button>
-      </div>
-    </dialog>
+    </Job>
 
-    <section class="job section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-      <header class="mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white mdl-color--primary">
-        <i class="material-icons">settings</i>
-      </header>
-      <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
-        <div class="mdl-card__supporting-text">
-          <h4>Node.js Developer</h4>
-          <p>
-            Looking for an experienced Node.js developer to join the team in a
-            real time video application.
-          </p>
-
-          <span class="mdl-chip">
-            <span class="mdl-chip__text">Senior</span>
-          </span>
-
-          <span class="mdl-chip">
-            <span class="mdl-chip__text">Full time</span>
-          </span>
-
-          <span class="mdl-chip">
-            <span class="mdl-chip__text">Remote</span>
-          </span>
-        </div>
-        <div class="mdl-card__actions">
-          <a id="job-node-details-button" href="#" class="mdl-button">
-            Details
-          </a>
-          <a href="https://forms.gle/eiSczrUvUdCGw7hHA" class="mdl-button">
-            Apply
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <dialog id="job-node-details" class="mdl-dialog">
-      <h4 class="mdl-dialog__title">Node.js Developer</h4>
-      <div class="mdl-dialog__content">
+    <Job
+    title="Node.js Developer"
+    description="Looking for an experienced Node.js developer to join the team in a real time video application."
+    icon="settings"
+    chips={['Senior', 'Full time', 'Remote']}
+    applyAt="https://forms.gle/eiSczrUvUdCGw7hHA">
         <p>
           Looking for an experienced Node.js developer developing a real time
           video application.
@@ -128,58 +139,14 @@ const Jobs = () => (
           <li>Knowledge of React</li>
           <li>Experience in building Node.js microservices</li>
         </ul>
-      </div>
-      <div class="mdl-dialog__actions">
-        <a
-          href="https://forms.gle/eiSczrUvUdCGw7hHA"
-          type="button"
-          class="mdl-button"
-        >
-          Apply
-        </a>
-        <button type="button" class="mdl-button close">
-          Close
-        </button>
-      </div>
-    </dialog>
+    </Job>
 
-    <section class="job section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
-      <header class="mdl-cell mdl-cell--3-col-desktop mdl-cell--2-col-tablet mdl-cell--4-col-phone mdl-color--teal-100 mdl-color-text--white mdl-color--primary">
-        <i class="material-icons">assistant</i>
-      </header>
-      <div class="mdl-card mdl-cell mdl-cell--9-col-desktop mdl-cell--6-col-tablet mdl-cell--4-col-phone">
-        <div class="mdl-card__supporting-text">
-          <h4>Virtual Assistant</h4>
-          <p>
-            Looking for a virtual assistant to help with the office errands.
-          </p>
-
-          <span class="mdl-chip">
-            <span class="mdl-chip__text">Hungarian</span>
-          </span>
-
-          <span class="mdl-chip">
-            <span class="mdl-chip__text">4 hours</span>
-          </span>
-
-          <span class="mdl-chip">
-            <span class="mdl-chip__text">Remote</span>
-          </span>
-        </div>
-        <div class="mdl-card__actions">
-          <a id="job-assistant-details-button" href="#" class="mdl-button">
-            Details
-          </a>
-          <a href="https://forms.gle/DXDaDAeur8XhBKBe7" class="mdl-button">
-            Apply
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <dialog id="job-assistant-details" class="mdl-dialog">
-      <h4 class="mdl-dialog__title">Virtual Assistant</h4>
-      <div class="mdl-dialog__content">
+    <Job
+    title="Virtual Assistant"
+    description="Looking for a virtual assistant to help with the office errands."
+    icon="assistant"
+    chips={['Hungarian',  '4 hours', 'Remote']}
+    applyAt="https://forms.gle/DXDaDAeur8XhBKBe7">
         <p>
           Looking for a virtual assistant to help with the organization of the
           company.
@@ -191,20 +158,8 @@ const Jobs = () => (
           <li>Hungarian language</li>
           <li>English language</li>
         </ul>
-      </div>
-      <div class="mdl-dialog__actions">
-        <a
-          href="https://forms.gle/DXDaDAeur8XhBKBe7"
-          type="button"
-          class="mdl-button"
-        >
-          Apply
-        </a>
-        <button type="button" class="mdl-button close">
-          Close
-        </button>
-      </div>
-    </dialog>
+      </Job>
+
   </span>
 );
 
