@@ -13,6 +13,7 @@ import Home from '../routes/home';
 import Lab from '../routes/lab';
 import Jobs from '../routes/jobs';
 import Profile from '../routes/profile';
+import NotFound from '../routes/404';
 
 export default class App extends Component {
 
@@ -35,6 +36,7 @@ export default class App extends Component {
 					<Jobs path="/jobs" />
 					<Profile path="/profile/" user="me" />
 					<Profile path="/profile/:user" />
+					<NotFound default />
 				</Router>
 				</main>
 				<Footer />
