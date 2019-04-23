@@ -18,6 +18,7 @@ const Header = () => (
         JOBS
       </Link>
       <button
+        onClick={() =>  window.location.href = 'mailto:hello@sexybuddha.hu'}
         class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent"
         id="contact-button"
       >
