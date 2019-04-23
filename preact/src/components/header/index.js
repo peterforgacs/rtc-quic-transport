@@ -1,4 +1,3 @@
-import { h } from "preact";
 import { Link } from "preact-router/match";
 
 const Header = () => (
@@ -9,13 +8,13 @@ const Header = () => (
     </div>
     <div class="mdl-layout--large-screen-only mdl-layout__header-row" />
     <div class=" mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark mdl-js-ripple-effect--ignore-events">
-      <Link class="mdl-layout__tab is-active" href="/">
+      <Link activeClassName="is-active" class="mdl-layout__tab" href="/">
         HOME
       </Link>
-      <Link class="mdl-layout__tab" href="/lab">
+      <Link activeClassName="is-active" class="mdl-layout__tab" href="/lab">
         LAB
       </Link>
-      <Link class="mdl-layout__tab" href="/jobs">
+      <Link activeClassName="is-active" class="mdl-layout__tab" href="/jobs">
         JOBS
       </Link>
       <button
